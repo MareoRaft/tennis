@@ -77,7 +77,14 @@ def init_dataframes():
 # 	return num_male_stops / num_stops
 
 def score_to_str(score):
-	return '{}-{}'.format(score[0], score[1])
+	point_to_str = {
+		0: '0',
+		1: '15',
+		2: '30',
+		3: '40',
+		4: 'AD',
+	}
+	return '{}-{}'.format(point_to_str[score[0]], point_to_str[score[1]])
 
 def is_won_point(score, scoreAfter):
 	""" from the *server*'s perspective """
@@ -115,15 +122,15 @@ def show_bar_graph(dic):
 
 	plt.bar(y_pos, values, align='center', alpha=0.5)
 	plt.xticks(y_pos, categories)
-	plt.ylabel('Win percentage')
-	plt.title('Score to win percentage')
+	plt.ylabel('Win probability')
+	plt.title('Score to win probability')
 
 	plt.show()
 
 if __name__ == '__main__':
 	# MT = Montana, VT = Vermont
 	FILE_PATH = 'tennis_MatchChartingProject/charting-m-points.csv'
-	NUM_ROWS = 202
+	NUM_ROWS = None
 	df = init_dataframes()
 	dic = score_to_win_percent(df)
 	print([
