@@ -10,7 +10,7 @@ As an avid tennis player, I am both motivated to tackle this data and equipped t
 
 Tennis is a mental game.  Can the current score within a game predict outcome?  When I watch tennis on TV, I notice that a score of 0-30 or 15-30 almost always results in the server winning the next point.  Am I correct or crazy?
 
-![ad-out](ad-out.png)
+![](score-to-win.png)
 
 (data from `JeffSackmann/tennis_MatchChartingProject > charting-m-points.csv` which lists about 300,000 tennis points coming from about 2,000 men's matches)
 
@@ -20,7 +20,7 @@ The interesting thing about this is that the 40-AD score and the 30-40 score are
 
 When I initially ran this graph, I only ran it on the first 200 data points.  The results were very different:
 
-![score to win probability, Querrey vs Anderson](querrey-anderson.png)
+![](score-to-win-querrey-anderson.png)
 
 These results seem to confirm my suspicion for servers reacting strongly to a 0-30 situation.  It turns out that the first 200 data points correspond to a match between Sam Querrey and Kevin Anderson.  Sam Querrey is a very strong server.  Is it possible that this correlation holds for strong servers in general?  Can we find more patterns if we cluster our players into different categories?  This leads into the next question.
 
@@ -57,7 +57,7 @@ there is a correlation between aces and the scores 30-0, 40-0, and 40-15.  This 
 
 Now, zooming in on the match between Sam Querrey and Kevin Anderson, we have some similarities and differences.
 
-![](score-to-ace-querrey-anderson)
+![](score-to-ace-querrey-anderson.png)
 
 This time, there is a surprisingly high probability for 15-40, which suggests that Querrey is in a desperate/high-pressure situation, and willing to take risks.  There are also *no* aces for the 15-15 and 30-30 situations.
 

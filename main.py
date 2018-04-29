@@ -139,7 +139,7 @@ def show_bar_graph(dic, yname):
 	plt.bar(y_pos, values, align='center', alpha=0.5)
 	plt.xticks(y_pos, categories)
 	plt.ylabel('{} probability'.format(yname))
-	plt.title('Score to {} probability (Querrey v Anderson)'.format(yname))
+	plt.title('Score to {} probability'.format(yname))
 
 	plt.show()
 
