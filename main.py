@@ -10,8 +10,16 @@ import scipy as sp
 from scipy import stats
 import pandas as pd
 
+# HELPERS
+def player_to_initials(pl):
+	# pl is a player such as "Sam_Querrey"
+	first, last = pl.split('_')
+	return first[0] + last[0]
+
+# DATAFRAME
 def csv_to_df(file_path, col_names, col_types, col_converters):
 	df = pd.read_csv(file_path,
+		encoding='utf_8',
 		delimiter=',',
 		header='infer', # read col names from file itself
 		names=None, # since 'infer' is used above
@@ -24,9 +32,15 @@ def csv_to_df(file_path, col_names, col_types, col_converters):
 		nrows=NUM_ROWS
 	)
 	# create more columns
-	# df['year'] = [
-	# 	date.year for date in df['stop_date']
-	# ]
+	def id_to_info(id_):
+		date, gender, location, _, player1, player2 = id_.split('-')
+		return [date, gender, location, _, player1, player2]
+	df['player1'] = [
+		id_to_info(id_)[4] for id_ in df['match_id']
+	]
+	df['player2'] = [
+		id_to_info(id_)[5] for id_ in df['match_id']
+	]
 	return df
 
 def init_dataframes():
@@ -34,6 +48,8 @@ def init_dataframes():
 	# import data
 	# col names we need, (subset of col_names_full)
 	col_names = [
+		'match_id',
+		'Serving',
 		'Pts',
 		'PtsAfter',
 		'isAce',
@@ -41,6 +57,8 @@ def init_dataframes():
 	]
 	# the data type of each column
 	col_types = {
+		'match_id': str,
+		'Serving': str,
 		'isAce': bool,
 		'isSvrWinner': bool,
 	}
@@ -115,6 +133,15 @@ def score_to_win_probability(df):
 def score_to_ace_probability(df):
 	return score_to_bool_probability(df, 'isAce')
 
+def player_is_serving(df, player):
+	df_player = df[
+		(df['player1'] == player) | (df['player2'] == player)
+	]
+	df_player_serving = df_player[
+		df_player['Serving'] == player_to_initials(player)
+	]
+	return df_player_serving
+
 def chi_square(df, score_to_yes_no_count):
 	""" let's first try the chi_square for score-to-win situation, all rows """
 	# we find the TOTAL point wins and point losses.  This allows us to calculate the EXPECTED point wins and losses in the 'score' situation
@@ -167,16 +194,18 @@ def show_bar_graph(dic, yname):
 	plt.show()
 
 if __name__ == '__main__':
-	FILE_PATH = 'tennis_MatchChartingProject/charting-m-points.csv'
-	NUM_ROWS = 202
+	FILE_PATH = 'charting-m-points.csv'
+	NUM_ROWS = None
 	SCORE_OF_INTEREST = '15-40'
+	PLAYER = 'Sam_Querrey'
 
 	df = init_dataframes()
-	chisq, p = ace_chi_square(df)
-	dic = score_to_ace_probability(df)
+	df_server = player_is_serving(df, PLAYER)
+	dic = score_to_ace_probability(df_server)
+	chisq, p = ace_chi_square(df_server)
 	print([
-		chisq,
-		p,
+		# chisq,
+		# p,
 	])
 	show_bar_graph(dic, 'ace')
 
