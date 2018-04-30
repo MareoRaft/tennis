@@ -168,17 +168,17 @@ def show_bar_graph(dic, yname):
 
 if __name__ == '__main__':
 	FILE_PATH = 'tennis_MatchChartingProject/charting-m-points.csv'
-	NUM_ROWS = None
-	SCORE_OF_INTEREST = '40-AD'
+	NUM_ROWS = 202
+	SCORE_OF_INTEREST = '15-40'
 
 	df = init_dataframes()
-	chisq, p = win_chi_square(df)
-	dic = score_to_win_probability(df)
+	chisq, p = ace_chi_square(df)
+	dic = score_to_ace_probability(df)
 	print([
 		chisq,
 		p,
 	])
-	show_bar_graph(dic, 'win')
+	show_bar_graph(dic, 'ace')
 
 
 
