@@ -51,8 +51,8 @@ def init_dataframes():
 		'match_id',
 		'Serving',
 		'Pts',
-		'PtsAfter',
 		'isAce',
+		'isDouble',
 		'isSvrWinner',
 	]
 	# the data type of each column
@@ -64,6 +64,13 @@ def init_dataframes():
 	}
 	# the data cleaners for select columns
 	# NONE_VALUES = ['', 'NON-', 'UNK']
+	def convert_double(s):
+		if s == 'TRUE':
+			return True
+		elif s == 'FALSE':
+			return False
+		else:
+			return False
 	def convert_score(score):
 		if score == 'GM':
 			return [0, 0]
@@ -87,10 +94,9 @@ def init_dataframes():
 		return [score_to_int[lscore], score_to_int[rscore]]
 	col_converters = {
 		'Pts': convert_score,
-		'PtsAfter': convert_score,
+		'isDouble': convert_double,
 	}
 	df = csv_to_df(FILE_PATH, col_names, col_types, col_converters)
-	# df = pd.concat([df_VT, df_MT])
 	return df
 
 def score_to_str(score):
@@ -127,12 +133,6 @@ def score_to_bool_probability(df, other_name, is_yes_converter=lambda s, other_d
 	}
 	return s_to_yes_probability
 
-def score_to_win_probability(df):
-	return score_to_bool_probability(df, 'isSvrWinner')
-
-def score_to_ace_probability(df):
-	return score_to_bool_probability(df, 'isAce')
-
 def player_is_serving(df, player):
 	df_player = df[
 		(df['player1'] == player) | (df['player2'] == player)
@@ -142,9 +142,16 @@ def player_is_serving(df, player):
 	]
 	return df_player_serving
 
-def chi_square(df, score_to_yes_no_count):
+def chi_square(df, obj):
 	""" let's first try the chi_square for score-to-win situation, all rows """
 	# we find the TOTAL point wins and point losses.  This allows us to calculate the EXPECTED point wins and losses in the 'score' situation
+	if isinstance(obj, dict):
+		score_to_yes_no_count = obj
+	elif isinstance(obj, str):
+		score_to_yes_no_count = score_to_bool_count(df, obj)
+	else:
+		raise ValueError('obj can be a score_to_yes_no_count dictionary or a column label of what to count.')
+
 	total_yes = sum(yes_no[0] for yes_no in score_to_yes_no_count.values())
 	total_no = sum(yes_no[1] for yes_no in score_to_yes_no_count.values())
 	total_count = total_yes + total_no
@@ -173,41 +180,38 @@ def chi_square(df, score_to_yes_no_count):
 	)
 	return chisq, p
 
-def win_chi_square(df):
-	dic = score_to_bool_count(df, 'isSvrWinner')
-	return chi_square(df, dic)
-
-def ace_chi_square(df):
-	dic = score_to_bool_count(df, 'isAce')
-	return chi_square(df, dic)
-
-def show_bar_graph(dic, yname):
-	categories = dic.keys()
+def plot_bar_graph(dic, yname):
+	# categories = sorted(dic.keys())
+	categories = ['0-40', '15-40', '0-30', '40-AD', '30-40', '15-30', '0-15', '40-40', '30-30', '15-15', '0-0', '15-0', '30-15', '40-30', 'AD-40', '30-0', '40-15', '40-0']
 	y_pos = np.arange(len(categories))
 	values = [dic[x] for x in categories]
 
-	plt.bar(y_pos, values, align='center', alpha=0.5)
+	bar_list = plt.bar(y_pos, values, align='center', alpha=0.5)
+	(bar.set_color('r') for bar in bar_list)
 	plt.xticks(y_pos, categories)
 	plt.ylabel('{} probability'.format(yname))
 	plt.title('Score to {} probability'.format(yname))
 
-	plt.show()
 
 if __name__ == '__main__':
 	FILE_PATH = 'charting-m-points.csv'
 	NUM_ROWS = None
 	SCORE_OF_INTEREST = '15-40'
-	PLAYER = 'Sam_Querrey'
+	PLAYER = 'Roger_Federer' # use "_"
 
 	df = init_dataframes()
 	df_server = player_is_serving(df, PLAYER)
-	dic = score_to_ace_probability(df_server)
-	chisq, p = ace_chi_square(df_server)
+	# chisq, p = chi_square(df_server, 'isAce')
 	print([
 		# chisq,
 		# p,
 	])
-	show_bar_graph(dic, 'ace')
+
+	dic = score_to_bool_probability(df_server, 'isSvrWinner')
+	plot_bar_graph(dic, '')
+	dic = score_to_bool_probability(df_server, 'isDouble')
+	plot_bar_graph(dic, '')
+	plt.show()
 
 
 
