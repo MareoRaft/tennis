@@ -37,10 +37,12 @@ def init_dataframes():
 		'Pts',
 		'PtsAfter',
 		'isAce',
+		'isSvrWinner',
 	]
 	# the data type of each column
 	col_types = {
 		'isAce': bool,
+		'isSvrWinner': bool,
 	}
 	# the data cleaners for select columns
 	# NONE_VALUES = ['', 'NON-', 'UNK']
@@ -83,15 +85,6 @@ def score_to_str(score):
 	}
 	return '{}-{}'.format(point_to_str[score[0]], point_to_str[score[1]])
 
-def is_won_point(score, scoreAfter):
-	""" from the *server*'s perspective """
-	if score[0] in (3, 4) and scoreAfter == [0, 0]:
-		return True
-	elif score[0] < scoreAfter[0]:
-		return True
-	else:
-		return False
-
 def score_to_bool_count(df, other_name, is_yes_converter=lambda s, other_datum: other_datum):
 	""" 's' is short for 'score' in this function """
 	# score --> [num_yes, num_no]
@@ -117,7 +110,7 @@ def score_to_bool_probability(df, other_name, is_yes_converter=lambda s, other_d
 	return s_to_yes_probability
 
 def score_to_win_probability(df):
-	return score_to_bool_probability(df, 'PtsAfter', is_won_point)
+	return score_to_bool_probability(df, 'isSvrWinner')
 
 def score_to_ace_probability(df):
 	return score_to_bool_probability(df, 'isAce')
@@ -154,7 +147,7 @@ def chi_square(df, score_to_yes_no_count):
 	return chisq, p
 
 def win_chi_square(df):
-	dic = score_to_bool_count(df, 'PtsAfter', is_won_point)
+	dic = score_to_bool_count(df, 'isSvrWinner')
 	return chi_square(df, dic)
 
 def ace_chi_square(df):
@@ -174,20 +167,18 @@ def show_bar_graph(dic, yname):
 	plt.show()
 
 if __name__ == '__main__':
-	# MT = Montana, VT = Vermont
 	FILE_PATH = 'tennis_MatchChartingProject/charting-m-points.csv'
-	NUM_ROWS = 202
-	SCORE_OF_INTEREST = '15-40'
+	NUM_ROWS = None
+	SCORE_OF_INTEREST = '40-AD'
 
 	df = init_dataframes()
-	chisq, p = ace_chi_square(df)
-	dic = score_to_ace_probability(df)
+	chisq, p = win_chi_square(df)
+	dic = score_to_win_probability(df)
 	print([
 		chisq,
 		p,
-		# area_largest_MT_county(df_MT),
 	])
-	show_bar_graph(dic, 'ace')
+	show_bar_graph(dic, 'win')
 
 
 

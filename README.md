@@ -14,7 +14,7 @@ Tennis is a mental game.  Can the current score within a game predict outcome?  
 
 (data from `JeffSackmann/tennis_MatchChartingProject > charting-m-points.csv` which lists about 300,000 tennis points coming from about 2,000 men's matches)
 
-The data says that I'm crazy!  But it also points out a surprising result.  Servers in the 40-AD situation are much more likely to lose the next point.  The sheer amount of data and the very low 40-AD probability is enough to conclude significance.  A Chi-squared test confirms this with a p-value so low that numpy rounds it down to 0.
+The data says that I'm crazy!  But it also points out a surprising result.  The 40-AD score is the situation where servers are most likely to lose the next point.  A Chi-squared test confirms the significance of this with a p-value so low that numpy rounds it down to 0.
 
 The interesting thing about this is that the 40-AD score and the 30-40 score are arguably identical situations.  Both scores result in losing the game if the next point is lost, and both scores result in 40-40 if the next point is won.  But the data shows that these situations are psychologically different.  Servers in the 40-AD position have been serving for a longer amount of time and weren't able to close out the game sooner.  Returners in that position may be tough-customers who are chomping at the bit to steal the game from the server.
 
@@ -26,24 +26,9 @@ These results seem to confirm my suspicion for servers reacting strongly to a 0-
 
 ### Question 2
 
-Do players cluster into nice 'player types', and are certain player clusters more successful?
-
-For example, I predict that a heavier player is more likely to have a heavier racket and a one-handed backhand.  On the other hand, I predict a lighter player will have a two-handed backhand, be a faster runner and a better returner, and have a weaker serve.
-
-Am I correct about the existance of these two clusters?  Are there more clusters?  There are many dimensions to consider, including weight, height, lefty/righty, one-handed-backhand/two-handed-backhand, racket weight, and racket string-pattern.  These dimensions can be split into two categories: the "independent" dimensions (like height) that are outside of the player's control, and the "dependent" dimensions (like racket string-pattern) that are the player's choice.
-
-### Question 3
-
-Is there a correlation between different player types / play styles and the types of injuries that those players get?  What exactly are those correlations?  I will probably not pursue this question because I have yet to find good data on tennis injuries.
-
-### Question 4
-
 Are serve-and-volleyers streakier than others?  This question was posed by Jeff Sackman in his [questions about tennis](https://github.com/JeffSackmann/tennis_Research_Notes).  This question may be easy to answer because it uses a lot of the same machinery as the score calculation above.
 
-TODO: try the streakier result
-TODO: try the cluster result
-
-### Question 5
+### Question 3
 
 Going back to the "score to win-next-point" analysis and the thought that certain types of players (such as the "big server" Sam Querrey) may behave differently in certain situations, it gave me the idea to run a "score to ace" analysis in much the same way.
 
@@ -61,7 +46,3 @@ Now, zooming in on the match between Sam Querrey and Kevin Anderson, we have som
 
 This time, there is a surprisingly high probability for 15-40, which suggests that Querrey is in a desperate/high-pressure situation, and willing to take risks.  There are also *no* aces for the 15-15 and 30-30 situations.  (A Chi-squared test on the 15-40 situation yields a p-value of 0.25, which is inconclusive.  Remember that there are only 200 data points in this match.  We could aggregate more data on Sam Querrey to get a conclusive answer.)
 
-
-
-
-NTS: look at https://stackoverflow.com/questions/41710789/boolean-series-key-will-be-reindexed-to-match-dataframe-index#41715287
