@@ -28,7 +28,14 @@ These results seem to confirm my suspicion for servers reacting strongly to a 0-
 
 ### Question 2
 
-Are serve-and-volleyers streakier than others?  This question was posed by Jeff Sackman in his [questions about tennis](https://github.com/JeffSackmann/tennis_Research_Notes).  This question may be easy to answer because it uses a lot of the same machinery as the score calculation above.
+Are breaks more frequent immediately after winning a set?  This question was posed by Jeff Sackman in his [questions about tennis](https://github.com/JeffSackmann/tennis_Research_Notes).  One might think 'yes' because of the momentum from winning the set, but there are many factors to consider.  To answer the question, I examined four categories:
+
+  1. Probability of any returner breaking the server: 0.214.
+  2. Probability of previous-game-winning returner breaking the server: 0.170.
+  3. Probability of any returner breaking the server in first game of set: 0.227.
+  4. Probability of previous-set-winning returner breaking the server in first game of set: 0.255.
+
+Considering the large number of data points, this is statistically significant.  We see that (1) and (3) are close to each other, which suggests that being at the beginning of a set itself does not increase the probability of breaking by much.  Therefore, the value for situation (4) means that players really do get 'momentum' from their set win!  But what is most surprising is the very low value for (2).  In situation (2), the player has just successfully held their serve, and they are *less* likely to break in the next game than even the average probability (1).  I believe this is because the player has expended more energy to hold their serve, and now the pressure is lifted from them in the following game.
 
 ### Question 3
 
