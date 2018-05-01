@@ -12,17 +12,17 @@ Tennis is a mental game.  Can the current score within a game predict outcome?  
 
 ![](images/score-to-win.png)
 
-(Data from `JeffSackmann/tennis_MatchChartingProject > charting-m-points.csv` which lists about 300,000 tennis points coming from about 2,000 men's matches.  If you are not familiar with tennis scoring, read [here](https://github.com/MareoRaft/appendix.md).)
+(Data from `charting-m-points.csv` from the [Match Charting Project](https://github.com/JeffSackmann/tennis_MatchChartingProject) which lists about 300,000 tennis points coming from about 2,000 men's matches.  If you are not familiar with tennis scoring, read [here](https://github.com/MareoRaft/appendix.md).)
 
 The data says that I'm crazy!  But it also points out a surprising result.  The 40-AD score is the situation where servers are most likely to lose the next point.  A Chi-squared test confirms significance with a p-value of order 10^(-13).
 
 The interesting thing about this is that the 40-AD score and the 30-40 score are arguably identical situations.  Both scores result in losing the game if the next point is lost, and both scores result in 40-40 if the next point is won.  But the data shows that these situations are psychologically different.  Servers in the 40-AD position have been serving for a longer amount of time and weren't able to close out the game sooner.  Returners in that position may be tough-customers who are chomping at the bit to steal the game from the server.
 
-When I initially ran this graph, I only ran it on the first 200 data points.  The results were very different:
+Where things get really interesting is when we look at the stats for a specific player:
 
-![](images/score-to-win-querrey-anderson.png)
+![](images/score-to-win-querrey.png)
 
-These results seem to confirm my suspicion for servers reacting strongly to a 0-30 situation (but is inconclusive with a Chi-squared test p-value of 0.09).  It turns out that the first 200 data points correspond to a match between Sam Querrey and Kevin Anderson.  Sam Querrey is a very strong server.  Is it possible that this correlation holds for strong servers in general?  Can we find more patterns if we cluster our players into different categories?  At the very least, collecting more data points on "big servers" or Sam Querrey in particular can make the test conclusive.
+These results seem to confirm my suspicion for servers reacting strongly to a 0-30 situation (but is inconclusive with a Chi-squared test p-value of 0.09) despite much lower outcomes for similar scores such as 15-30 and 15-40.  Sam Querrey is a very strong server.  Is it possible that this correlation holds for strong servers in general?  Can we find more patterns if we cluster our players into different categories?
 
 ### Question 2
 
@@ -45,9 +45,11 @@ The results are again quite interesting.  Looking at all the matches,
 
 there is a correlation between aces and the scores 30-0, 40-0, and 40-15.  This suggests that when the server is ahead, he is confident, more willing to take risks, and more likely ace.  (A Chi-squared test on the 40-0 situation confirms with a p-value of order 10^(-107).)
 
-Now, zooming in on the match between Sam Querrey and Kevin Anderson, we have some similarities and differences.
+Now, zooming in on Sam Querrey's service points, we have some similarities and differences:
 
-![](images/score-to-ace-querrey-anderson.png)
+![](images/score-to-ace-double-querrey.png)
 
-This time, there is a surprisingly high probability for 15-40, which suggests that Querrey is in a desperate/high-pressure situation, and willing to take risks.  There are also **no** aces for the 15-15 and 30-30 situations.  (A Chi-squared test on the 15-40 situation yields a p-value of 0.25, which is inconclusive.  Remember that there are only 200 data points in this match.  We could aggregate more data on Sam Querrey to get a conclusive answer.)
+Aces are shown in blue and double-faults are shown in brown.
+
+This time, there is a surprisingly high probability for aces at 15-40, but no double-faults, which suggests that Querrey reacts well to this pressure situation.  At the other end of the spectrum, Querrey hits many less aces in the 40-AD situation and many more double-faults.  This suggests that he is much more nervous.
 
