@@ -240,25 +240,25 @@ def plot_bar_graph(dic, yname):
 
 if __name__ == '__main__':
 	FILE_PATH = 'charting-m-points.csv'
-	NUM_ROWS = 202
+	NUM_ROWS = None
 	SCORE_OF_INTEREST = '0-30'
-	PLAYER = 'Sam_Querrey' # use "_"
-	PLOT_TITLE = "Sam Querrey's score to win-probability vs Kevin Anderson"
-	PLOT_V_AXIS_TITLE = "probability of winning point"
+	PLAYER = 'Roger_Federer' # use "_"
+	PLOT_TITLE = "Roger Federer's score to ace/double-fault probability"
+	PLOT_V_AXIS_TITLE = "probability of ace/double-fault"
 
 	df = init_dataframes()
 	df_server = player_serving_filter(df, PLAYER)
-	chisq, p = chi_square(df_server, 'isSvrWinner')
+	chisq, p = chi_square(df_server, 'isAce')
 	print([
 		chisq,
 		p,
 		# momentum_count(df),
 	])
 
-	dic = score_to_bool_probability(df_server, 'isSvrWinner')
+	dic = score_to_bool_probability(df_server, 'isAce')
 	plot_bar_graph(dic, PLOT_TITLE)
-	# dic = score_to_bool_probability(df_server, 'isDouble')
-	# plot_bar_graph(dic, '')
+	dic = score_to_bool_probability(df_server, 'isDouble')
+	plot_bar_graph(dic, '')
 	plt.show()
 
 

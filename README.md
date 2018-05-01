@@ -1,5 +1,7 @@
 # tennis
 
+[video proposal here](https://www.youtube.com/embed/c3c2JLGioNc)
+
 Jeff Sackmann has tons of open-source data about professional tennis on [his GitHub account](https://github.com/JeffSackmann).  Not only does he have a bunch of unanswered [questions about tennis](https://github.com/JeffSackmann/tennis_Research_Notes), I have a few of my own.
 
 As an avid tennis player, I am both motivated to tackle this data and equipped to interpret results in an insightful way.
@@ -18,7 +20,7 @@ The data says that I'm crazy!  But it also points out a surprising result.  The 
 
 The interesting thing about this is that the 40-AD score and the 30-40 score are arguably identical situations.  Both scores result in losing the game if the next point is lost, and both scores result in 40-40 if the next point is won.  But the data shows that these situations are psychologically different.  Servers in the 40-AD position have been serving for a longer amount of time and weren't able to close out the game sooner.  Returners in that position may be tough-customers who are chomping at the bit to steal the game from the server.
 
-Where things get really interesting is when we look at the stats for a specific player:
+Where things get really interesting is when we look at the stats for a specific player (Sam Querrey):
 
 ![](images/score-to-win-querrey-anderson.png)
 
