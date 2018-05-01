@@ -12,7 +12,7 @@ Tennis is a mental game.  Can the current score within a game predict outcome?  
 
 (In the bar graph below, each bar corresponds to a score.  The server's score is show first followed by a dash followed by the receiver's score.  In tennis, the scores you obtain are 0, 15, 30, 40, in that order.  If the score reaches 40-40, then it is required to win by two points.  Hence AD-40 means that the server is one point ahead and on the verge of winning, and 40-AD means that the receiver is one point ahead and on the verge of winning.  The vertical axis of the graph represents the probability that the server will win the point, which is always a value between 0 and 1.)
 
-![](score-to-win.png)
+![](images/score-to-win.png)
 
 (data from `JeffSackmann/tennis_MatchChartingProject > charting-m-points.csv` which lists about 300,000 tennis points coming from about 2,000 men's matches)
 
@@ -22,7 +22,7 @@ The interesting thing about this is that the 40-AD score and the 30-40 score are
 
 When I initially ran this graph, I only ran it on the first 200 data points.  The results were very different:
 
-![](score-to-win-querrey-anderson.png)
+![](images/score-to-win-querrey-anderson.png)
 
 These results seem to confirm my suspicion for servers reacting strongly to a 0-30 situation (but is inconclusive with a Chi-squared test p-value of 0.09).  It turns out that the first 200 data points correspond to a match between Sam Querrey and Kevin Anderson.  Sam Querrey is a very strong server.  Is it possible that this correlation holds for strong servers in general?  Can we find more patterns if we cluster our players into different categories?  At the very least, collecting more data points on "big servers" or Sam Querrey in particular can make the test conclusive.
 
@@ -35,7 +35,7 @@ Are breaks more frequent immediately after winning a set?  This question was pos
   3. Probability of any returner breaking the server in first game of set: 0.227.
   4. Probability of previous-set-winning returner breaking the server in first game of set: 0.255.
 
-Considering the large number of data points, this is statistically significant.  We see that (1) and (3) are close to each other, which suggests that being at the beginning of a set itself does not increase the probability of breaking by much.  Therefore, the value for situation (4) means that players really do get 'momentum' from their set win!  But what is most surprising is the very low value for (2).  In situation (2), the player has just successfully held their serve, and they are *less* likely to break in the next game than even the average probability (1).  I believe this is because the player has expended more energy to hold their serve, and now the pressure is lifted from them in the following game.
+Considering the large number of data points, this is statistically significant.  We see that (1) and (3) are close to each other, which suggests that being at the beginning of a set itself does not increase the probability of breaking by much.  Therefore, the value for situation (4) means that players *really do get 'momentum'* from their set win!  But what is most surprising is the **very low value for (2)**.  In situation (2), the player has just successfully held their serve, and they are *less* likely to break in the next game than even the average probability (1).  I believe this is because the player has expended more energy to hold their serve, and now the pressure is lifted from them in the following game.
 
 ### Question 3
 
@@ -43,13 +43,13 @@ Going back to the "score to win-next-point" analysis and the thought that certai
 
 The results are again quite interesting.  Looking at all the matches,
 
-![](score-to-ace.png)
+![](images/score-to-ace.png)
 
 there is a correlation between aces and the scores 30-0, 40-0, and 40-15.  This suggests that when the server is ahead, he is confident, more willing to take risks, and more likely ace.  (A Chi-squared test on the 40-0 situation confirms with a p-value of order 10^(-107).)
 
 Now, zooming in on the match between Sam Querrey and Kevin Anderson, we have some similarities and differences.
 
-![](score-to-ace-querrey-anderson.png)
+![](images/score-to-ace-querrey-anderson.png)
 
 This time, there is a surprisingly high probability for 15-40, which suggests that Querrey is in a desperate/high-pressure situation, and willing to take risks.  There are also **no** aces for the 15-15 and 30-30 situations.  (A Chi-squared test on the 15-40 situation yields a p-value of 0.25, which is inconclusive.  Remember that there are only 200 data points in this match.  We could aggregate more data on Sam Querrey to get a conclusive answer.)
 
