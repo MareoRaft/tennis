@@ -10,11 +10,9 @@ As an avid tennis player, I am both motivated to tackle this data and equipped t
 
 Tennis is a mental game.  Can the current score within a game predict outcome?  When I watch tennis on TV, I notice that a score of 0-30 or 15-30 almost always results in the server winning the next point.  Am I correct or crazy?
 
-(In the bar graph below, each bar corresponds to a score.  The server's score is show first followed by a dash followed by the receiver's score.  In tennis, the scores you obtain are 0, 15, 30, 40, in that order.  If the score reaches 40-40, then it is required to win by two points.  Hence AD-40 means that the server is one point ahead and on the verge of winning, and 40-AD means that the receiver is one point ahead and on the verge of winning.  The vertical axis of the graph represents the probability that the server will win the point, which is always a value between 0 and 1.)
-
 ![](images/score-to-win.png)
 
-(data from `JeffSackmann/tennis_MatchChartingProject > charting-m-points.csv` which lists about 300,000 tennis points coming from about 2,000 men's matches)
+(Data from `JeffSackmann/tennis_MatchChartingProject > charting-m-points.csv` which lists about 300,000 tennis points coming from about 2,000 men's matches.  If you are not familiar with tennis scoring, read [here](https://github.com/MareoRaft/appendix.md).)
 
 The data says that I'm crazy!  But it also points out a surprising result.  The 40-AD score is the situation where servers are most likely to lose the next point.  A Chi-squared test confirms significance with a p-value of order 10^(-13).
 
