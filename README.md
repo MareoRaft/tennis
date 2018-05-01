@@ -20,7 +20,7 @@ The interesting thing about this is that the 40-AD score and the 30-40 score are
 
 Where things get really interesting is when we look at the stats for a specific player:
 
-![](images/score-to-win-querrey.png)
+![](images/score-to-win-querrey-anderson.png)
 
 These results seem to confirm my suspicion for servers reacting strongly to a 0-30 situation (but is inconclusive with a Chi-squared test p-value of 0.09) despite much lower outcomes for similar scores such as 15-30 and 15-40.  Sam Querrey is a very strong server.  Is it possible that this correlation holds for strong servers in general?  Can we find more patterns if we cluster our players into different categories?
 
@@ -49,7 +49,10 @@ Now, zooming in on Sam Querrey's service points, we have some similarities and d
 
 ![](images/score-to-ace-double-querrey.png)
 
-Aces are shown in blue and double-faults are shown in brown.
+Aces are shown in blue and double-faults are superimposed in brown.
 
 This time, there is a surprisingly high probability for aces at 15-40, but no double-faults, which suggests that Querrey reacts well to this pressure situation.  At the other end of the spectrum, Querrey hits many less aces in the 40-AD situation and many more double-faults.  This suggests that he is much more nervous.
 
+## Proposal
+
+I would like to answer as many as Jeff Sackman's questions as possible, writing up the work clearly and ultimately contributing to his project.
