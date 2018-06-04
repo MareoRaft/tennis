@@ -58,3 +58,26 @@ This time, there is a surprisingly high probability for aces at 15-40, but no do
 ## Proposal
 
 I would like to answer as many as Jeff Sackman's questions as possible, writing up the work clearly and ultimately contributing to his project.
+
+## Does winning a very long game (e.g. a game with 6+ deuces) influence the outcome of the next game, or represent some more general momentum shift?
+
+We'll look at games with 4 or more deuces.  We'll see if the server won that game.  Then we'll see if the server wins his next service game (2 games later).  For comparison, let's actually look at four situations:
+
+  1. A server wins the game.
+  2. A server loses the game.
+  3. A server faces 4+ deuces and wins the game.
+  4. A server faces 4+ deuces and loses the game.
+
+For each of the four situations, we observe how often (as a percentage) the server wins his next service game.
+
+Without looking at the data, many deuces indicates to me that the server is struggling.  I predict that the 4+ deuce categories will both be lower than the control categories.  I also predict that the win categories will be higher than the lose categories.
+
+The data is in!  Servers in the 4+ deuce situation win the game 69.2% of the time.  In general, servers win the game 78.4% of the time, which seems to confirm my prediction.  Now for the four categories:
+
+  1. The server wins the game: 76.9%
+  2. The server loses the game: 67.6%
+  3. 4+ deuces, server wins game: 72.0%
+  4. 4+ deuces, server loses game: 66.8%
+
+The deuce situations are worse that the normal situations, as predicted.  The winning situations are much higher than the losing situations, which makes sense (because winners tend to win).  We conclude that the *result* of long deuce games does *not* have a major impact on future outcomes.  However, the very *presence* of long deuce games is an indicator that the server will perform worse.
+
