@@ -5,7 +5,7 @@ import data_ingestion_converters as convert
 # DATAFRAME
 def csv_to_df(file_path, col_names, col_types, col_converters, num_rows):
   df = pd.read_csv(file_path,
-    encoding='utf_8',
+    # encoding='utf_8', # leaving this blank allows pandas to tolerate non-utf-8 characters
     delimiter=',',
     header='infer', # read col names from file itself
     names=None, # since 'infer' is used above
