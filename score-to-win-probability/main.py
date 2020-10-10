@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-import os
 import time
-import datetime
-import math
-import collections
 
 import matplotlib.pyplot as plt; plt.rcdefaults()
 import numpy as np
