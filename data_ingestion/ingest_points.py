@@ -42,6 +42,7 @@ def init_dataframes(file_path, num_rows):
     'isAce',
     'isDouble',
     'isSvrWinner', # did server win the point
+    'PtWinner',
     'GmW', # game winner player number.  0 means that it's not a game ending point.
     'SetW', # set winner player number.  0 means that it's not a set ending point.
   ]
@@ -59,6 +60,7 @@ def init_dataframes(file_path, num_rows):
     'isDouble': convert.double_fault,
     'Svr': convert.player_num,
     'Ret': convert.player_num,
+    'PtWinner': convert.player_num,
     'GmW': convert.player_num,
     'SetW': convert.player_num,
   }
