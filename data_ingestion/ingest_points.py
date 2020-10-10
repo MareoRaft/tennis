@@ -1,6 +1,6 @@
 import pandas as pd
 
-import data_ingestion_converters as convert
+import data_ingestion.converters as convert
 
 # DATAFRAME
 def csv_to_df(file_path, col_names, col_types, col_converters, num_rows):

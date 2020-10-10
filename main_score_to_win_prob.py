@@ -4,8 +4,8 @@ import time
 import matplotlib.pyplot as plt; plt.rcdefaults()
 import numpy as np
 
-from data_ingestion import init_dataframes
-import analysis as a
+from data_ingestion.ingest_points import init_dataframes
+import analysis.score_to_win_prob as a
 
 
 def plot_bar_graph(dic, yname):
@@ -22,7 +22,7 @@ def plot_bar_graph(dic, yname):
 
 
 if __name__ == '__main__':
-	FILE_PATH = '../tennis_MatchChartingProject/charting-m-points.csv'
+	FILE_PATH = './tennis_MatchChartingProject/charting-m-points.csv'
 	NUM_ROWS = 800
 	SCORE_OF_INTEREST = '0-30'
 	PLAYER = 'Roger_Federer' # use "_"
