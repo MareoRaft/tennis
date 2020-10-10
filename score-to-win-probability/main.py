@@ -3,117 +3,21 @@ import os
 import time
 import datetime
 import math
+import collections
 
 import matplotlib.pyplot as plt; plt.rcdefaults()
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy as sp
 from scipy import stats
-import pandas as pd
+
+from data_ingestion import init_dataframes
 
 # HELPERS
 def player_to_initials(pl):
 	# pl is a player such as "Sam_Querrey"
 	first, last = pl.split('_')
 	return first[0] + last[0]
-
-# DATAFRAME
-def csv_to_df(file_path, col_names, col_types, col_converters):
-	df = pd.read_csv(file_path,
-		encoding='utf_8',
-		delimiter=',',
-		header='infer', # read col names from file itself
-		names=None, # since 'infer' is used above
-		usecols=col_names,
-		dtype=col_types,
-		converters=col_converters,
-		true_values=['TRUE'],
-		false_values=['FALSE'],
-		skipinitialspace=True,
-		nrows=NUM_ROWS
-	)
-	# create more columns
-	def id_to_info(id_):
-		date, gender, location, _, player1, player2 = id_.split('-')
-		return [date, gender, location, _, player1, player2]
-	df['player1'] = [
-		id_to_info(id_)[4] for id_ in df['match_id']
-	]
-	df['player2'] = [
-		id_to_info(id_)[5] for id_ in df['match_id']
-	]
-	return df
-
-def init_dataframes():
-	""" Takes in file path and creates dataframe with only the info we want. """
-	# import data
-	# col names we need, (subset of col_names_full)
-	col_names = [
-		'match_id',
-		'Svr', # server player number (1 or 2)
-		'Ret', # returner player number
-		'Serving', # server's initials
-		'Pts', # the current point score
-		'isAce',
-		'isDouble',
-		'isSvrWinner', # did server win the point
-		'GmW', # game winner player number.  0 means that it's not a game ending point.
-		'SetW', # set winner player number.  0 means that it's not a set ending point.
-	]
-	# the data type of each column
-	col_types = {
-		'match_id': str,
-		'Serving': str,
-		'isAce': bool,
-		'isSvrWinner': bool,
-	}
-	# the data cleaners for select columns
-	# NONE_VALUES = ['', 'NON-', 'UNK']
-	def convert_player_num(s):
-		if s == '1':
-			return 1
-		elif s == '2':
-			return 2
-		else:
-			return 0
-	def convert_double(s):
-		if s == 'TRUE':
-			return True
-		elif s == 'FALSE':
-			return False
-		else:
-			return False
-	def convert_score(score):
-		if score == 'GM':
-			return [0, 0]
-		split_scores = score.split('-')
-		if len(split_scores) != 2:
-			return None
-		lscore, rscore = split_scores
-		score_to_int = {
-			'0': 0,
-			'15': 1,
-			'30': 2,
-			'40': 3,
-			'AD': 4,
-			# '1': 1,
-			# '2': 2,
-			# '3': 3,
-			# '4': 4,
-		}
-		if lscore not in score_to_int or rscore not in score_to_int:
-			return None
-		return [score_to_int[lscore], score_to_int[rscore]]
-	col_converters = {
-		'Pts': convert_score,
-		'isDouble': convert_double,
-		'Svr': convert_player_num,
-		'Ret': convert_player_num,
-		'GmW': convert_player_num,
-		'SetW': convert_player_num,
-	}
-	df = csv_to_df(FILE_PATH, col_names, col_types, col_converters)
-	return df
 
 def score_to_str(score):
 	point_to_str = {
@@ -211,14 +115,12 @@ def server_count(df):
 def score_to_bool_count(df, other_name, is_yes_converter=lambda s, other_datum: other_datum):
 	""" 's' is short for 'score' in this function """
 	# score --> [num_yes, num_no]
-	s_to_yes_no = dict()
+	s_to_yes_no = collections.defaultdict(lambda: [0, 0])
 	for s, other_datum in zip(df['Pts'], df[other_name]):
 		if s is None or other_datum is None:
 			continue
 		is_yes = is_yes_converter(s, other_datum)
 		s_str = score_to_str(s)
-		if s_str not in s_to_yes_no:
-			s_to_yes_no[s_str] = [0, 0]
 		if is_yes:
 			s_to_yes_no[s_str][0] += 1
 		else:
@@ -294,13 +196,13 @@ def plot_bar_graph(dic, yname):
 
 if __name__ == '__main__':
 	FILE_PATH = 'charting-m-points.csv'
-	NUM_ROWS = None
+	NUM_ROWS = 800
 	SCORE_OF_INTEREST = '0-30'
 	PLAYER = 'Roger_Federer' # use "_"
 	PLOT_TITLE = "Roger Federer's score to ace/double-fault probability"
 	PLOT_V_AXIS_TITLE = "probability of ace/double-fault"
 
-	df = init_dataframes()
+	df = init_dataframes(FILE_PATH, NUM_ROWS)
 	df_server = player_serving_filter(df, PLAYER)
 	start_time = time.time()
 	print('data loaded.  crunching numbers...')
