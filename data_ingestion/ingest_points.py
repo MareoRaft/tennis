@@ -1,11 +1,12 @@
 import pandas as pd
 
 import data_ingestion.converters as convert
+from data_ingestion import clean_csv
 
 # DATAFRAME
 def csv_to_df(file_path, col_names, col_types, col_converters, num_rows):
   df = pd.read_csv(file_path,
-    # encoding='utf_8', # leaving this blank allows pandas to tolerate non-utf-8 characters
+    encoding='utf_8',
     delimiter=',',
     header='infer', # read col names from file itself
     names=None, # since 'infer' is used above
@@ -64,5 +65,9 @@ def init_dataframes(file_path, num_rows):
     'GmW': convert.player_num,
     'SetW': convert.player_num,
   }
-  df = csv_to_df(file_path, col_names, col_types, col_converters, num_rows)
+  # remove any non-UTF-8 characters from the file
+  clean_csv.remove_non_utf_8_chars(file_path)
+  clean_file_path = clean_csv.get_output_file_path(file_path)
+  # init the df from the cleaned file
+  df = csv_to_df(clean_file_path, col_names, col_types, col_converters, num_rows)
   return df
