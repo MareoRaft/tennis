@@ -1,5 +1,10 @@
 # tennis
 
+## Run dev server
+
+  docker build -t tennis . && docker run -p 5000:5000 -v $(pwd):/home/jovyan/work tennis
+
+
 [video proposal here](https://www.youtube.com/embed/c3c2JLGioNc)
 
 Jeff Sackmann has tons of open-source data about professional tennis on [his GitHub account](https://github.com/JeffSackmann).  Not only does he have a bunch of unanswered [questions about tennis](https://github.com/JeffSackmann/tennis_Research_Notes), I have a few of my own.

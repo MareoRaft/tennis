@@ -6,6 +6,6 @@ data_clustering.tab
 fun_with_clustering.py
 player-h.csv
 
-
+cache/
 
 __pycache__/

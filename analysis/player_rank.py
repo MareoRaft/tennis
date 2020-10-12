@@ -14,7 +14,7 @@ def row_to_loser_winner_pair(row):
   else:
     raise ValueError(f"unexpected point winner value {row['PtWinner']}")
 
-@ediblepickle.checkpoint(key='weighted_graph_for_player_rank.ediblepickle', work_dir='../cache', refresh=False)
+@ediblepickle.checkpoint(key='weighted_graph_for_player_rank.ediblepickle', work_dir='./cache', refresh=False)
 def init_weighted_graph(df):
   # for each row in df (which represents a match), create an edge from losing player to winning player
   df_ = df[['player1', 'player2', 'PtWinner']]
@@ -31,6 +31,6 @@ def pagerank(graph):
   # nx pagerank does not work on multi graphs.  We must feed it a weighted graph.
   # by default, if edges have a 'weight' key, they will be used as weights in the PageRank algo.
   pagerank_dict = nx.pagerank(graph)
-  top_pagerank_list = sorted(pagerank_dict.items(), key=lambda item: item[1], reverse=True)[:10]
+  top_pagerank_list = sorted(pagerank_dict.items(), key=lambda item: item[1], reverse=True)[:20]
   return top_pagerank_list
 
