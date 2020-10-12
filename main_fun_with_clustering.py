@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from scipy.spatial.distance import pdist, squareform
 from scipy.cluster.hierarchy import linkage, dendrogram
 
-data = np.genfromtxt("data_clustering.tab",names=True,usecols=tuple(range(1,30)),dtype=float, delimiter="\t")
+data = np.genfromtxt("data/data_clustering.tab",names=True,usecols=tuple(range(1,30)),dtype=float, delimiter="\t")
 print len(data)
 print len(data.dtype.names)
 data_array = data.view((np.float, len(data.dtype.names)))
