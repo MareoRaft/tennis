@@ -3,7 +3,7 @@ import os
 
 # 3rd party imports
 from flask import Flask, request, redirect, send_from_directory, jsonify
-import flask
+from flask_cors import CORS
 
 # local imports
 import main_player_rank
@@ -11,7 +11,9 @@ import main_player_rank
 
 # Create the app
 app = Flask(__name__)
-
+CORS(app, origins=[
+	'http://localhost:5001',
+])
 
 
 # Define the routes
