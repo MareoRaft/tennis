@@ -2,7 +2,7 @@
 import time
 
 
-from data_ingestion.ingest_points import init_dataframes
+from data_ingestion.ingest_points import init_dataframe
 from output.score_to_win_prob import plot_bar_graph, plot_bar_graphs
 import analysis.score_to_win_prob as a
 
@@ -14,7 +14,7 @@ if __name__ == '__main__':
 	SCORE_OF_INTEREST = '0-30'
 	PLAYER = 'Roger_Federer' # use "_"
 
-	df = init_dataframes(FILE_PATH, NUM_ROWS)
+	df = init_dataframe(FILE_PATH, NUM_ROWS)
 	df_server = a.player_serving_filter(df, PLAYER)
 	start_time = time.time()
 	print('data loaded.  crunching numbers...')

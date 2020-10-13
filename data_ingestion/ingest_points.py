@@ -1,4 +1,5 @@
 import pandas as pd
+import ediblepickle
 
 import data_ingestion.converters as convert
 from data_ingestion import clean_csv
@@ -28,9 +29,19 @@ def csv_to_df(file_path, col_names, col_types, col_converters, num_rows):
   df['player2'] = [
     id_to_info(id_)[5] for id_ in df['match_id']
   ]
+  def get_player_serving(row):
+    ''' Compute the id of the player who is serving. '''
+    if row['Svr'] == 1:
+      return row['player1']
+    elif row['Svr'] == 2:
+      return row['player2']
+    else:
+      raise ValueError(f"unknown Svr (server) '{row['Svr']}'")
+  df['playerServing'] = df.apply(get_player_serving, axis=1)
   return df
 
-def init_dataframes(file_path, num_rows):
+@ediblepickle.checkpoint(key='init_dataframe.ediblepickle', work_dir='./cache', refresh=False)
+def init_dataframe(file_path, num_rows):
   """ Takes in file path and creates dataframe with only the info we want. """
   # import data
   # col names we need, (subset of col_names_full)

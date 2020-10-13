@@ -4,8 +4,8 @@ import time
 import numpy as np
 import networkx as nx
 
-from data_ingestion.ingest_points import init_dataframes
-from analysis import player_rank as a
+from data_ingestion.ingest_points import init_dataframe
+from analysis import pagerank as a
 
 
 def main(verbose=False):
@@ -13,7 +13,7 @@ def main(verbose=False):
 	NUM_ROWS = None # charting-m-points has 297532 lines # A value of None will get them all
 
 	# ingest
-	df = init_dataframes(FILE_PATH, NUM_ROWS)
+	df = init_dataframe(FILE_PATH, NUM_ROWS)
 	if verbose:
 		start_time = time.time()
 		print('data loaded.  crunching numbers...')
