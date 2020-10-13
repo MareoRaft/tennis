@@ -13,6 +13,7 @@ import main_player_rank
 app = Flask(__name__)
 CORS(app, origins=[
 	'http://localhost:5001',
+	'http://learnnation.org',
 ])
 
 

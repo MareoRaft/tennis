@@ -9,7 +9,7 @@ from analysis import player_rank as a
 
 
 def main(verbose=False):
-	FILE_PATH = './tennis_MatchChartingProject/charting-m-points.csv'
+	FILE_PATH = './data/charting-m-points.csv'
 	NUM_ROWS = None # charting-m-points has 297532 lines # A value of None will get them all
 
 	# ingest
