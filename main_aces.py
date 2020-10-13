@@ -7,10 +7,9 @@ from data_ingestion.ingest_points import init_dataframe
 from analysis import aces as a
 
 
-def main(verbose=False):
+def main(limit: int, verbose=False):
 	FILE_PATH = './data/charting-m-points.csv'
 	NUM_ROWS = None # charting-m-points has 297532 lines # A value of None will get them all
-	LIMIT = 3
 	start_time = time.time()
 
 	# ingest
@@ -21,7 +20,7 @@ def main(verbose=False):
 		print('crunching numbers...')
 
 	# analyze
-	player_rank_list = a.player_to_aces(df, LIMIT)
+	player_rank_list = a.player_to_aces(df, limit)
 
 	# outgest (convert to output data structure for frontend)
 	frontend_player_rank_list = [{'category': player, 'value1': score} for player,score in player_rank_list]
@@ -33,7 +32,8 @@ def main(verbose=False):
 	return frontend_player_rank_list
 
 if __name__ == '__main__':
-	pr = main(verbose=True)
+	LIMIT = 3
+	pr = main(limit=LIMIT, verbose=True)
 	print('aces player rank:', pr)
 	print('Finished crunching numbers.', end='')
 

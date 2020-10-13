@@ -24,11 +24,13 @@ CORS(app, origins=[
 def index():
   # get url params
   stat = flask.request.args.get('stat', default='pagerank')
+  limit = int(flask.request.args.get('limit', default=10))
+  app.logger.info(f'got limit: {limit}')
   # compute everything
   if stat == 'pagerank':
     frontend_data = main_pagerank.main()
   elif stat == 'aces':
-    frontend_data = main_aces.main()
+    frontend_data = main_aces.main(limit)
   return jsonify(frontend_data)
 
 
