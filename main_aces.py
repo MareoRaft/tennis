@@ -23,7 +23,7 @@ def main(limit: int, verbose=False):
 	player_rank_list = a.player_to_aces(df, limit)
 
 	# outgest (convert to output data structure for frontend)
-	frontend_player_rank_list = [{'category': player, 'value1': score} for player,score in player_rank_list]
+	frontend_player_rank_list = [{'category': player, 'value': score} for player,score in player_rank_list]
 
 	# output
 	if verbose:

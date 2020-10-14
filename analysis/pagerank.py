@@ -26,11 +26,11 @@ def init_weighted_graph(df):
     graph.add_edge(pp[0], pp[1], weight=weight)
   return graph
 
-def pagerank(graph):
+def pagerank(graph, limit):
   # nx uses alpha=0.85 as the default damping parameter
   # nx pagerank does not work on multi graphs.  We must feed it a weighted graph.
   # by default, if edges have a 'weight' key, they will be used as weights in the PageRank algo.
   pagerank_dict = nx.pagerank(graph)
-  top_pagerank_list = sorted(pagerank_dict.items(), key=lambda item: item[1], reverse=True)[:20]
+  top_pagerank_list = sorted(pagerank_dict.items(), key=lambda item: item[1], reverse=True)[:limit]
   return top_pagerank_list
 

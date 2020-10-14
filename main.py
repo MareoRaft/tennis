@@ -28,9 +28,11 @@ def index():
   app.logger.info(f'got limit: {limit}')
   # compute everything
   if stat == 'pagerank':
-    frontend_data = main_pagerank.main()
+    frontend_data = main_pagerank.main(limit)
   elif stat == 'aces':
     frontend_data = main_aces.main(limit)
+  else:
+    raise NotImplementedError('stat not supported')
   return jsonify(frontend_data)
 
 
