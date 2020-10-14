@@ -1,8 +1,15 @@
+import re
+
 import pandas as pd
 import ediblepickle
 
 import data_ingestion.converters as convert
 from data_ingestion import clean_csv
+
+def clean_value(value):
+    # sometimes values have trailing underscores, players in particular
+    value = re.sub(r'_$', '', value)
+    return value
 
 # DATAFRAME
 def csv_to_df(file_path, col_names, col_types, col_converters, num_rows):
@@ -22,6 +29,8 @@ def csv_to_df(file_path, col_names, col_types, col_converters, num_rows):
   # create more columns
   def id_to_info(id_):
     date, gender, location, _, player1, player2 = id_.split('-')
+    player1 = clean_value(player1)
+    player2 = clean_value(player2)
     return [date, gender, location, _, player1, player2]
   df['player1'] = [
     id_to_info(id_)[4] for id_ in df['match_id']
