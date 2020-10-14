@@ -32,7 +32,7 @@ def main(stat: str, limit: int, verbose=False):
 	return frontend_player_rank_list
 
 if __name__ == '__main__':
-	stat = 'points-won'
+	stat = 'double-faults'
 	pr = main(stat=stat, limit=3, verbose=True)
 	print(f'stat:{stat} player rank:', pr)
 	print('Finished crunching numbers.', end='')

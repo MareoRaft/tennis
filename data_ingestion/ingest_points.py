@@ -50,6 +50,18 @@ def csv_to_df(file_path, col_names, col_types, col_converters, num_rows):
     else:
       raise ValueError(f"unknown PtWinner (point winner) '{row['PtWinner']}'")
   df['playerPtWinner'] = df.apply(get_point_winning_player, axis=1)
+  def get_point_losing_player(row):
+    ''' Compute the id of the player who is serving. '''
+    if row['PtWinner'] == 1:
+      return row['player2']
+    elif row['PtWinner'] == 2:
+      return row['player1']
+    elif row['PtWinner'] == 0:
+      # point was a let, point was interupted, or data was missing
+      return None
+    else:
+      raise ValueError(f"unknown PtWinner (point winner) '{row['PtWinner']}'")
+  df['playerPtLoser'] = df.apply(get_point_losing_player, axis=1)
   def is_point(row):
     # Every row represents 1 point, of course
     return 1

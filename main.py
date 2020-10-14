@@ -29,7 +29,7 @@ def index():
   # compute everything
   if stat == 'pagerank':
     frontend_data = main_pagerank.main(limit)
-  elif stat in ('aces', 'points-won'):
+  elif stat in ('aces', 'double-faults', 'points-won', 'service-points-won'):
     frontend_data = main_generic_query.main(stat, limit)
   else:
     raise NotImplementedError('stat not supported')
