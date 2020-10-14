@@ -8,7 +8,7 @@ from flask_cors import CORS
 
 # local imports
 import main_pagerank
-import main_aces
+import main_generic_query
 
 
 # Create the app
@@ -29,8 +29,8 @@ def index():
   # compute everything
   if stat == 'pagerank':
     frontend_data = main_pagerank.main(limit)
-  elif stat == 'aces':
-    frontend_data = main_aces.main(limit)
+  elif stat in ('aces', 'points-won'):
+    frontend_data = main_generic_query.main(stat, limit)
   else:
     raise NotImplementedError('stat not supported')
   return jsonify(frontend_data)
