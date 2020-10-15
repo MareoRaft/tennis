@@ -1,5 +1,11 @@
 import pandas as pd
 
+NORMALIZATION_TO_COL_SYMBOL = {
+  'count': '#',
+  'percent': '%',
+}
+
+
 def player_to_stats_df(df):
   ''' Given the point dataframe, output a [(player,num_stat),...] ranking. '''
 
@@ -38,7 +44,8 @@ def player_to_stats_df(df):
 
 def player_to_stat(df, stat, normalization, limit):
   ''' `df` is the player_to_stats dataframe. '''
-  stat_col = f'{stat}{normalization}'
+  normalization_col_symbol = NORMALIZATION_TO_COL_SYMBOL[normalization]
+  stat_col = f'{stat}{normalization_col_symbol}'
   df_player_to_stat = df[['player', stat_col]]
   # take the 'top 10' or so
   top_player_to_stat = df_player_to_stat.nlargest(limit, stat_col)
