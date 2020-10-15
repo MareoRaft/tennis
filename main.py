@@ -24,14 +24,15 @@ CORS(app, origins=[
 def index():
   # get url params
   stat = flask.request.args.get('stat', default='pagerank')
-  normalization = flask.request.args.get('normalization', default='%')
+  normalization = flask.request.args.get('normalization', default='percent')
+  reverse = bool('true' == flask.request.args.get('reverse', default='false'))
   limit = int(flask.request.args.get('limit', default=10))
   app.logger.info(f'got limit: {limit}')
   # compute everything
   if stat == 'pagerank':
     frontend_data = main_pagerank.main(limit)
   else:
-    frontend_data = main_generic_query.main(stat, normalization, limit)
+    frontend_data = main_generic_query.main(stat, normalization, reverse, limit)
   return jsonify(frontend_data)
 
 

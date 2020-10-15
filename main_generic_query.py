@@ -7,7 +7,7 @@ from data_ingestion.ingest_points import init_dataframe
 from analysis import stat as a
 
 
-def main(stat: str, normalization: str, limit: int, verbose=False):
+def main(stat: str, normalization: str, reverse: bool, limit: int, verbose=False):
   FILE_PATH = './data/charting-m-points.csv'
   NUM_ROWS = None # charting-m-points has 297532 lines # A value of None will get them all
   start_time = time.time()
@@ -21,7 +21,7 @@ def main(stat: str, normalization: str, limit: int, verbose=False):
 
   # analyze
   df_players = a.player_to_stats_df(df_points)
-  player_rank_list = a.player_to_stat(df_players, stat, normalization, limit)
+  player_rank_list = a.player_to_stat(df_players, stat, normalization, reverse, limit)
 
   # outgest (convert to output data structure for frontend)
   frontend_player_rank_list = [{'category': player, 'value': score} for player,score in player_rank_list]
@@ -34,7 +34,7 @@ def main(stat: str, normalization: str, limit: int, verbose=False):
 
 if __name__ == '__main__':
   stat = 'dblFault'
-  pr = main(stat=stat, normalization='%', limit=3, verbose=True)
+  pr = main(stat=stat, normalization='percent', reverse=False, limit=3, verbose=True)
   print(f'stat:{stat}. player rank:\n', pr)
   print('Finished crunching numbers.', end='')
 

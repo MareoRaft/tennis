@@ -42,13 +42,13 @@ def player_to_stats_df(df):
   return df_player_enough_data
 
 
-def player_to_stat(df, stat, normalization, limit):
+def player_to_stat(df, stat, normalization, reverse, limit):
   ''' `df` is the player_to_stats dataframe. '''
   normalization_col_symbol = NORMALIZATION_TO_COL_SYMBOL[normalization]
   stat_col = f'{stat}{normalization_col_symbol}'
   df_player_to_stat = df[['player', stat_col]]
   # take the 'top 10' or so
-  top_player_to_stat = df_player_to_stat.nlargest(limit, stat_col)
+  top_player_to_stat = df_player_to_stat.nsmallest(limit, stat_col) if reverse else df_player_to_stat.nlargest(limit, stat_col)
   # convert to a list
   list_player_to_stat = [(row['player'],row[stat_col]) for index,row in top_player_to_stat.iterrows()]
   return list_player_to_stat
