@@ -2,7 +2,15 @@
 
 ## Run dev server
 
-  docker build -t tennis . && docker run -p 5000:5000 -v $(pwd):/home/jovyan/work tennis
+  docker build -t mvlancellotti/tennis-backend . &&
+  docker run -p 5000:5000 -v $(pwd):/home/jovyan/work mvlancellotti/tennis-backend
+
+## Test and prod server
+
+  docker build -t mvlancellotti/tennis-backend . &&
+  docker run -p 5000:5000 mvlancellotti/tennis-backend
+
+
 
 
 [video proposal here](https://www.youtube.com/embed/c3c2JLGioNc)
