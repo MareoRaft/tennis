@@ -1,4 +1,5 @@
 import re
+import io
 
 import pandas as pd
 import ediblepickle
@@ -12,8 +13,8 @@ def clean_value(value):
     return value
 
 # DATAFRAME
-def csv_to_df(file_path, col_names, col_types, col_converters, num_rows):
-  df = pd.read_csv(file_path,
+def csv_to_df(csv_string, col_names, col_types, col_converters, num_rows):
+  df = pd.read_csv(io.StringIO(csv_string),
     encoding='utf_8',
     delimiter=',',
     header='infer', # read col names from file itself
@@ -114,8 +115,7 @@ def init_dataframe(file_path, num_rows):
     'SetW': convert.player_num,
   }
   # remove any non-UTF-8 characters from the file
-  clean_csv.remove_non_utf_8_chars(file_path)
-  clean_file_path = clean_csv.get_output_file_path(file_path)
+  csv_string = clean_csv.read_file_omitting_utf_8_chars(file_path)
   # init the df from the cleaned file
-  df = csv_to_df(clean_file_path, col_names, col_types, col_converters, num_rows)
+  df = csv_to_df(csv_string, col_names, col_types, col_converters, num_rows)
   return df
