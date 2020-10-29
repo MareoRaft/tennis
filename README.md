@@ -2,12 +2,13 @@
 
 ## Run dev server
 
-  docker build -t mvlancellotti/tennis-backend . && docker run -p 5000:5000 -v $(pwd):/home/jovyan/work mvlancellotti/tennis-backend
+  docker build -t mvlancellotti/tennis-backend:dev -f dev.Dockerfile . &&
+  docker run --rm -p 5000:5000 -v $(pwd):/home/matt/work mvlancellotti/tennis-backend:dev
 
 ## Test and prod server
 
-  docker build -t mvlancellotti/tennis-backend . &&
-  docker run -p 5000:5000 mvlancellotti/tennis-backend
+  docker build -t mvlancellotti/tennis-backend:prod -f prod.Dockerfile . &&
+  docker run --rm -p 5000:5000 mvlancellotti/tennis-backend:prod
 
 
 
