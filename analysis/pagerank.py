@@ -1,4 +1,5 @@
 import collections
+import string
 
 import scipy as sp
 from scipy import stats
@@ -14,8 +15,8 @@ def row_to_loser_winner_pair(row):
   else:
     raise ValueError(f"unexpected point winner value {row['PtWinner']}")
 
-@ediblepickle.checkpoint(key='weighted_graph_for_player_rank.ediblepickle', work_dir='./cache', refresh=False)
-def init_weighted_graph(df):
+@ediblepickle.checkpoint(key=string.Template('weighted_graph_for_pagerank-{1}.ediblepickle'), work_dir='./cache', refresh=False)
+def init_weighted_graph(df, gender):
   # for each row in df (which represents a match), create an edge from losing player to winning player
   df_ = df[['player1', 'player2', 'PtWinner']]
   df_somebody_won = df_[df_['PtWinner'] != 0]

@@ -7,13 +7,13 @@ from data_ingestion.ingest_points import init_dataframe
 from analysis import stat as a
 
 
-def main(stat: str, normalization: str, reverse: bool, limit: int, verbose=False):
-  FILE_PATH = './data/charting-m-points.csv'
+def main(gender: str, stat: str, normalization: str, reverse: bool, limit: int, verbose=False):
+  FILE_NAME = f'charting-{gender}-points.csv'
   NUM_ROWS = None # charting-m-points has 297532 lines # A value of None will get them all
   start_time = time.time()
 
   # ingest
-  df_points = init_dataframe(FILE_PATH, NUM_ROWS)
+  df_points = init_dataframe(FILE_NAME, NUM_ROWS)
   if verbose:
     print('data loaded.')
     print(' Elapsed time = {}'.format(time.time() - start_time))
@@ -34,7 +34,9 @@ def main(stat: str, normalization: str, reverse: bool, limit: int, verbose=False
 
 if __name__ == '__main__':
   stat = 'dblFault'
-  pr = main(stat=stat, normalization='percent', reverse=False, limit=3, verbose=True)
-  print(f'stat:{stat}. player rank:\n', pr)
+  pr = main(gender='m', stat=stat, normalization='percent', reverse=False, limit=3, verbose=True)
+  print(f'stat:{stat}. ranking:\n', pr, '\n')
+  pr = main(gender='w', stat=stat, normalization='percent', reverse=False, limit=3, verbose=True)
+  print(f'stat:{stat}. ranking:\n', pr, '\n')
   print('Finished crunching numbers.', end='')
 

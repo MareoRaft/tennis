@@ -1,5 +1,7 @@
+import os
 import re
 import io
+import string
 
 import pandas as pd
 import ediblepickle
@@ -29,7 +31,7 @@ def csv_to_df(csv_string, col_names, col_types, col_converters, num_rows):
   )
   # create more columns
   def id_to_info(id_):
-    date, gender, location, _, player1, player2 = id_.split('-')
+    date, gender, location, _, player1, player2, *extra = id_.split('-')
     player1 = clean_value(player1)
     player2 = clean_value(player2)
     return [date, gender, location, _, player1, player2]
@@ -78,8 +80,8 @@ def csv_to_df(csv_string, col_names, col_types, col_converters, num_rows):
   df['isPt'] = df.apply(is_point, axis=1)
   return df
 
-@ediblepickle.checkpoint(key='init_dataframe.ediblepickle', work_dir='./cache', refresh=False)
-def init_dataframe(file_path, num_rows):
+@ediblepickle.checkpoint(key=string.Template('init_dataframe-for-file-{0}.ediblepickle'), work_dir='./cache', refresh=False)
+def init_dataframe(file_name, num_rows):
   """ Takes in file path and creates dataframe with only the info we want. """
   # import data
   # col names we need, (subset of col_names_full)
@@ -115,6 +117,7 @@ def init_dataframe(file_path, num_rows):
     'SetW': convert.player_num,
   }
   # remove any non-UTF-8 characters from the file
+  file_path = os.path.join('./data/', file_name)
   csv_string = clean_csv.read_file_omitting_utf_8_chars(file_path)
   # init the df from the cleaned file
   df = csv_to_df(csv_string, col_names, col_types, col_converters, num_rows)
