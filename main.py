@@ -14,6 +14,7 @@ import main_generic_query
 # Create the app
 app = Flask(__name__)
 CORS(app, origins=[
+  '/', # <-- maybe origin missing?
   'http://localhost:80',
   'http://localhost:5001',
   'http://localhost:5001/',
