@@ -49,5 +49,4 @@ def index():
 # Main execution loop
 # gunicorn doesn't run this.  it grabs the app var and runs/hosts it itself
 if __name__ == '__main__':
-  # port = int(os.environ.get('PORT', 5000))
-  app.run(host='0.0.0.0', port=5000, debug=True)
+  app.run(host='0.0.0.0', port=80, debug=True)
