@@ -6,8 +6,7 @@
 
 ## Test and prod server
 
-  docker build -t mvlancellotti/tennis-backend:prod -f prod.Dockerfile . &&
-  docker run --rm -p 5000:5000 mvlancellotti/tennis-backend:prod
+  docker build -t mvlancellotti/tennis-backend:prod -f prod.Dockerfile . && docker run --rm -p 5000:80 --name tennis-backend-container mvlancellotti/tennis-backend:prod
 
 
 
