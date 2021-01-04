@@ -2,8 +2,7 @@
 
 ## Run dev server
 
-  docker build -t mvlancellotti/tennis-backend:dev -f dev.Dockerfile . &&
-  docker run --rm -p 5000:5000 -v $(pwd):/home/matt/work mvlancellotti/tennis-backend:dev
+  docker-compose up
 
 ## Test and prod server
 
