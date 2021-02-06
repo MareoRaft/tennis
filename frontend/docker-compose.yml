@@ -1,0 +1,12 @@
+NOT IN USE.
+
+services:
+  dev:
+    restart: always
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    ports:
+      - 5001:5001
+    volumes:
+      - .:/home/node/app

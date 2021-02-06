@@ -1,0 +1,38 @@
+.alertOverlay {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	padding: 5% 10% 10% 10%;
+	text-align: left;
+	z-index: 1;
+	opacity: 0.85;
+	background: inherit;
+	background-color: white;
+	color: black;
+	/* experimental blurring (not enabled in Firefox by default). */
+	backdrop-filter: blur(4px);
+}
+
+.displayNone {
+	display: none;
+}
+
+.closeOverlay {
+	/* Wrapper for the 'x' to close the overlay */
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin-top: 20px;
+	margin-right: 20px;
+}
+
+.sectionHeader {
+	margin-bottom: 0;
+}
+
+.paragraph {
+	margin-top: 0px;
+}
+

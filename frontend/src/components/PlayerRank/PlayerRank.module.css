@@ -1,0 +1,21 @@
+.split {
+  position: fixed;
+  height: 100%;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.left {
+  left: 0;
+  width: 70%;
+  /*background-color: green;*/
+}
+
+.right {
+  right: 0;
+  width: 30%;
+  /*background-color: yellow;*/
+}
