@@ -1,0 +1,12 @@
+services:
+  dev:
+    restart: always
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    ports:
+      - 5000:80
+    volumes:
+      - ./app:/home/matt/work
+    environment:
+      - FRONTEND_SERVER_DOMAIN=localhost

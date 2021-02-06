@@ -8,7 +8,12 @@
 
   docker build -t mvlancellotti/tennis-backend:prod -f prod.Dockerfile . && docker run --rm -p 5000:80 --name tennis-backend-container mvlancellotti/tennis-backend:prod
 
+## prod deploy
 
+  docker push mvlancellotti/tennis-backend:prod
+  # and then on prod server
+  docker pull mvlancellotti/tennis-backend:prod
+  docker run --rm -p 5000:80 --name tennis-backend-container mvlancellotti/tennis-backend:prod
 
 
 [video proposal here](https://www.youtube.com/embed/c3c2JLGioNc)

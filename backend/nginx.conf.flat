@@ -1,0 +1,1 @@
+server {\n    listen 80;\n    location / {\n        add_header Access-Control-Allow-Origin *;\n        try_files $uri @app;\n    }\n    location @app {\n        include uwsgi_params;\n        uwsgi_pass unix:///tmp/uwsgi.sock;\n    }\n    location /static {\n        alias /app/static;\n    }\n}\n

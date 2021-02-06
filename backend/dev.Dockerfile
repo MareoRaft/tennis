@@ -13,8 +13,7 @@ RUN pip3 install scipy==1.5.2
 RUN pip3 install pandas==1.1.2
 RUN pip3 install networkx==2.5
 
-# pull in files for deployment
-COPY . .
+# Do NOT COPY files in, as we should use docker volumes in development
 
 # program to run
 CMD ["python3", "main.py"]
