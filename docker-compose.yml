@@ -1,9 +1,20 @@
+# This is the PROD docker compose file, which launches both front and back end.
 services:
-  dev:
+  frontend:
+    image: mvlancellotti/tennis-frontend:prod
+    container_name: tennis-frontend-container
+    restart: always
     build:
-      context: .
-      dockerfile: dev.Dockerfile
+      context: ./frontend
+      dockerfile: prod.Dockerfile
     ports:
-      - 5000:5000
-    volumes:
-      - .:/home/matt/work
+      - 5001:80
+  backend:
+    image: mvlancellotti/tennis-backend:prod
+    container_name: tennis-backend-container
+    restart: always
+    build:
+      context: ./backend
+      dockerfile: prod.Dockerfile
+    ports:
+      - 5000:80
