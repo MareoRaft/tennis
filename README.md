@@ -1,8 +1,9 @@
 # Tennis Capstone Project
 
-This is the repo for my Tennis Capstone Project for The Data Incubator.  The actual [**deployed web app** is here](http://162.243.168.182:5001/).  The repo for the [backend is here](https://github.com/MareoRaft/tennis-backend).    Please go to the [developer README](https://github.com/MareoRaft/tennis-frontend-tdi/blob/master/README.dev.md) if you want to actually develop or deploy the app.  Read on for an in-depth description of the project.
+This is the repo for my Tennis Capstone Project for The Data Incubator.  The actual [**deployed web app** is here](http://learnnation.org/tennis.html).  Both the `frontend/` and `backend/` directories contain README files for developers.  THIS README describes the project itself.
 
 
+*pic here*
 
 
 ## Business Objective
