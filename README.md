@@ -32,21 +32,15 @@ The ingestion pipeline is fully automated (it is enough to run [this function](h
 
 ## Visualizations
 
-The project contains a bar chart which is used for both the stats-comparisons and the PageRank comparison.  There exist 6 controls for interacting with the data as well as the zoom-interactivity of the amChart itself.  You can view it [here](http://162.243.168.182:5001/).
+The project contains a bar chart which is used for both the stats-comparisons and the PageRank comparison.  There exist 6 controls for interacting with the data as well as the zoom-interactivity of the amChart itself.
 
 
 
 ## Interactive Website
 
-Users interact with the project via a website.  Users explore the data by choosing a (1) statistic, (2) normalization, (3) gender, and some other options.  Users can click on info buttons to get explanations of the various choices and methods used to compute the data.  Users can click and drag on the chart to see cross sections of the view.
+Users interact with the project via a website.  Users explore the data by choosing a (1) statistic, (2) normalization, (3) gender, and some other options.  Users can click on info buttons to get explanations of the various choices and methods used to compute the data.
 
 The user interactivity is client-side, and the client will make calls to the server to update the data as necessary.  Tools used to achieve this include [JavaScript](https://www.w3schools.com/js/default.asp), [React](https://create-react-app.dev/), [Material-UI](https://material-ui.com/), [amCharts](https://www.amcharts.com/), [Python](https://www.python.org/) 3, [Flask](https://palletsprojects.com/p/flask/), [Pandas](https://pandas.pydata.org/), and [Networkx](https://networkx.org/).
-
-
-
-## Deliverable
-
-The above already describes the work done on the capstone, the tools used, and the data ingestion; but not the analysis and results.  I will include those below.  The deliverable is this very [repository](https://github.com/MareoRaft/tennis-frontend-tdi) and this very README.md file.  Point 3 includes a link to the visualizations.
 
 
 
