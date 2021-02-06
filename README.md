@@ -3,7 +3,7 @@
 This is the repo for my Tennis Capstone Project for The Data Incubator.  The actual [**deployed web app** is here](http://learnnation.org/tennis.html).  Both the `frontend/` and `backend/` directories contain README files for developers.  THIS README describes the project itself.
 
 
-*pic here*
+![](images/app-screenshot.png)
 
 
 ## Business Objective
