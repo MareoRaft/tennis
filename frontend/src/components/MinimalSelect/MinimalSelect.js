@@ -1,10 +1,43 @@
 import React from 'react'
-import { useMinimalSelectStyles } from '@mui-treasury/styles/select/minimal';
 import {
-  Select, MenuItem,
+  FormControl, InputLabel, Select, MenuItem,
 } from '@material-ui/core'
 import {ExpandMore} from '@material-ui/icons'
+import {makeStyles} from '@material-ui/core/styles'
 import _ from 'lodash'
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+       borderBottom: '1px solid white',
+    },
+        '&:before': {
+            borderColor: 'blue',
+        },
+        '&:after': {
+            borderColor: 'orange',
+        },
+
+    icon: {
+        fill: 'red',
+    },
+
+      formControl: {
+    color: 'green',
+    margin: theme.spacing(1),
+    minWidth: 120,
+    backgroundColor: 'yellow',
+  },
+  selectEmpty: {
+    color: 'yellow',
+    marginTop: theme.spacing(2),
+    backgroundColor: 'cyan',
+  },
+  color: 'cyan',
+  default: {
+    color: 'cyan',
+    backgroundColor: 'cyan',
+  },
+}))
 
 const renderMenuItems = (values) => {
   if (Array.isArray(values)) {
@@ -20,40 +53,20 @@ const renderMenuItems = (values) => {
 }
 
 const MinimalSelect = (props) => {
-  const minimalSelectClasses = useMinimalSelectStyles()
-  const iconComponent = (props) => {
-    return (
-      <ExpandMore className={props.className + ' ' + minimalSelectClasses.icon}/>
-    )
-  }
-  // moves the menu below the select input
-  const menuProps = {
-    classes: {
-      paper: minimalSelectClasses.paper,
-      list: minimalSelectClasses.list,
-    },
-    anchorOrigin: {
-      vertical: "bottom",
-        horizontal: "left",
-    },
-    transformOrigin: {
-      vertical: "top",
-        horizontal: "left",
-    },
-    getContentAnchorEl: null,
-  }
+  const classes = useStyles();
   return (
     <>
-      <Select
-        disableUnderline
-        classes={{ root: minimalSelectClasses.select }}
-        MenuProps={menuProps}
-        IconComponent={iconComponent}
-        value={props.value}
-        onChange={props.onChange}
-      >
-        {renderMenuItems(props.values)}
-      </Select>
+      <FormControl variant="filled" className={classes.formControl}>
+        {/*<InputLabel id="demo-simple-select-filled-label">{props.label}</InputLabel>*/}
+        <Select
+          labelId="demo-simple-select-filled-label"
+          id="demo-simple-select-filled"
+          value={props.value}
+          onChange={props.onChange}
+        >
+          {renderMenuItems(props.values)}
+        </Select>
+      </FormControl>
     </>
   );
 }

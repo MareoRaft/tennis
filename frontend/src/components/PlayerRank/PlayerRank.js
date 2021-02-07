@@ -8,7 +8,7 @@ import gc from '../../global-constants'
 import env from '../../env'
 
 
-function PlayerRank() {
+const PlayerRank = () => {
   // init vars
 	// set state
   const [gender, setGender] = useState(gc.DEFAULT_GENDER)
