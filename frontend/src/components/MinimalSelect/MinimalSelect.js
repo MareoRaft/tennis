@@ -7,35 +7,11 @@ import {makeStyles} from '@material-ui/core/styles'
 import _ from 'lodash'
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-       borderBottom: '1px solid white',
-    },
-        '&:before': {
-            borderColor: 'blue',
-        },
-        '&:after': {
-            borderColor: 'orange',
-        },
-
-    icon: {
-        fill: 'red',
-    },
-
-      formControl: {
-    color: 'green',
-    margin: theme.spacing(1),
-    minWidth: 120,
-    backgroundColor: 'yellow',
+  formControl: {
+    minWidth: 160,
   },
   selectEmpty: {
-    color: 'yellow',
     marginTop: theme.spacing(2),
-    backgroundColor: 'cyan',
-  },
-  color: 'cyan',
-  default: {
-    color: 'cyan',
-    backgroundColor: 'cyan',
   },
 }))
 
@@ -57,6 +33,7 @@ const MinimalSelect = (props) => {
   return (
     <>
       <FormControl variant="filled" className={classes.formControl}>
+        {/* If you want labels on the dropdown itself */}
         {/*<InputLabel id="demo-simple-select-filled-label">{props.label}</InputLabel>*/}
         <Select
           labelId="demo-simple-select-filled-label"
