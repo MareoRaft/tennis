@@ -10,43 +10,47 @@ NORMALIZATION_TO_COL_SYMBOL = {
 }
 
 
+def get_stat_df(df, group_by_col, agg_col, new_stat_col):
+  # aggregate
+  agg = {}
+  agg[agg_col] = 'sum'
+  df_stat = df.groupby([group_by_col], as_index=False).agg(agg)
+  # rename columns
+  columns = {}
+  columns[group_by_col] = 'player'
+  columns[agg_col] = new_stat_col
+  df_stat.rename(columns=columns, inplace=True)
+  return df_stat
+
+
 def player_to_stats_df(df):
   ''' Given the point dataframe, output a [(player,num_stat),...] ranking. '''
 
   # calculate various stats
-  df_service_wins = df.groupby(['playerPtWinner'], as_index=False).agg({'isSvrWinner': 'sum'})
-  df_service_wins.rename(columns={'playerPtWinner':'player', 'isSvrWinner':'svcPtWin#'}, inplace=True)
-
-  df_points_won = df.groupby(['playerPtWinner'], as_index=False).agg({'isPt': 'sum', 'timeDecayedPt': 'sum'})
-  df_points_won.rename(columns={'playerPtWinner':'player', 'isPt':'ptWin#', 'timeDecayedPt': 'ptWin#w'}, inplace=True)
-
-  df_points_lost = df.groupby(['playerPtLoser'], as_index=False).agg({'isPt': 'sum', 'timeDecayedPt': 'sum'})
-  df_points_lost.rename(columns={'playerPtLoser':'player', 'isPt':'ptLoss#', 'timeDecayedPt': 'ptLoss#w'}, inplace=True)
-
-  df_ace = df.groupby(['playerPtWinner'], as_index=False).agg({'isAce': 'sum'})
-  df_ace.rename(columns={'playerPtWinner':'player', 'isAce':'ace#'}, inplace=True)
-
-  df_double_faults = df.groupby(['playerPtLoser'], as_index=False).agg({'isDouble': 'sum'})
-  df_double_faults.rename(columns={'playerPtLoser':'player', 'isDouble':'dblFault#'}, inplace=True)
+  df_service_wins = get_stat_df(df, group_by_col='playerPtWinner', agg_col='isSvrWinner', new_stat_col='svcPtWin#')
+  df_points_won = get_stat_df(df, group_by_col='playerPtWinner', agg_col='isPt', new_stat_col='ptWin#')
+  df_points_lost = get_stat_df(df, group_by_col='playerPtLoser', agg_col='isPt', new_stat_col='ptLoss#')
+  df_aces = get_stat_df(df, group_by_col='playerPtWinner', agg_col='isAce', new_stat_col='ace#')
+  df_double_faults = get_stat_df(df, group_by_col='playerPtLoser', agg_col='isDouble', new_stat_col='dblFault#')
 
   # create player stat dataframe
   df_player = pd.merge(df_points_won, df_points_lost, on='player')
   # v weighted
-  df_player['pt#w'] = df_player['ptWin#w'] + df_player['ptLoss#w']
-  df_player['ptWin%w'] = df_player['ptWin#w'] / (df_player['pt#w'] + PENALTY)
+  # df_player['pt#w'] = df_player['ptWin#w'] + df_player['ptLoss#w']
+  # df_player['ptWin%w'] = df_player['ptWin#w'] / (df_player['pt#w'] + PENALTY)
   # ^ weighted
   df_player['pt#'] = df_player['ptWin#'] + df_player['ptLoss#']
   df_player['ptWin%'] = df_player['ptWin#'] / df_player['pt#']
   df_player['svcPtWin#'] = df_service_wins['svcPtWin#']
   df_player['svcPtWin%'] = df_player['svcPtWin#'] / df_player['pt#']
-  df_player['ace#'] = df_ace['ace#']
+  df_player['ace#'] = df_aces['ace#']
   df_player['ace%'] = df_player['ace#'] / df_player['pt#']
   df_player['dblFault#'] = df_double_faults['dblFault#']
   df_player['dblFault%'] = df_player['dblFault#'] / df_player['pt#']
 
   # restrict it to players where we have a reasonable amount of data
   df_player_enough_data = df_player[df_player['pt#'] >= 400]
-  print('df_player_enough_data:', df_player_enough_data[['player', 'ptWin%', 'ptWin%w']])
+  # print('df_player_enough_data:', df_player_enough_data[['player', 'ptWin%', 'ptWin%w']])
   return df_player_enough_data
 
 
