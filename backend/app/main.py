@@ -38,8 +38,8 @@ def index():
   # get url params
   gender = flask.request.args.get('gender', default='m')
   stat = flask.request.args.get('stat', default='pagerank')
-  # normalization = flask.request.args.get('normalization', default='percent')
-  normalization = 'percent'
+  normalization = flask.request.args.get('normalization', default='percent')
+  print('normalization:', normalization)
   reverse = bool('true' == flask.request.args.get('reverse', default='false'))
   limit = int(flask.request.args.get('limit', default=10))
   app.logger.info(f'got limit: {limit}')
@@ -47,7 +47,7 @@ def index():
   if stat == 'pagerank':
     frontend_data = main_pagerank.main(gender, limit)
   else:
-    frontend_data = main_generic_query.main(gender, stat, normalization, reverse, limit)
+    frontend_data = main_generic_query.main(gender, stat, normalization, reverse, limit, verbose=True)
   return jsonify(frontend_data)
 
 

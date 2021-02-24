@@ -2,6 +2,7 @@ import os
 import re
 import io
 import string
+import datetime
 
 import pandas as pd
 import ediblepickle
@@ -28,6 +29,7 @@ def csv_to_df(csv_string, col_names, col_types, col_converters, num_rows):
     false_values=['FALSE'],
     skipinitialspace=True,
     nrows=num_rows,
+    # nrows=4000,
   )
   # create more columns
   def id_to_info(id_):
@@ -35,12 +37,19 @@ def csv_to_df(csv_string, col_names, col_types, col_converters, num_rows):
     player1 = clean_value(player1)
     player2 = clean_value(player2)
     return [date, gender, location, _, player1, player2]
+  df['date'] = [
+    datetime.datetime.strptime(id_to_info(id_)[0], '%Y%m%d') for id_ in df['match_id']
+  ]
   df['player1'] = [
     id_to_info(id_)[4] for id_ in df['match_id']
   ]
   df['player2'] = [
     id_to_info(id_)[5] for id_ in df['match_id']
   ]
+  def get_time_decayed_point_value(row):
+    ''' Compute the the point value after decaying over time.  pt_value = (1/2)^(today - date). '''
+    return (1/2) ** ((datetime.datetime.today() - row['date']).days / 365)
+  df['timeDecayedPt'] = df.apply(get_time_decayed_point_value, axis=1)
   def get_player_serving(row):
     ''' Compute the id of the player who is serving. '''
     if row['Svr'] == 1:
@@ -78,6 +87,7 @@ def csv_to_df(csv_string, col_names, col_types, col_converters, num_rows):
     # Every row represents 1 point, of course
     return 1
   df['isPt'] = df.apply(is_point, axis=1)
+  # print(df)
   return df
 
 @ediblepickle.checkpoint(key=string.Template('init_dataframe-for-file-{0}.ediblepickle'), work_dir='./cache', refresh=False)

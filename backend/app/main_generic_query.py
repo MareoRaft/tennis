@@ -21,7 +21,7 @@ def main(gender: str, stat: str, normalization: str, reverse: bool, limit: int, 
 
   # analyze
   df_players = a.player_to_stats_df(df_points)
-  player_rank_list = a.player_to_stat(df_players, stat, normalization, reverse, limit)
+  player_rank_list = a.player_to_stat(df_players, stat, normalization, reverse, limit, verbose)
 
   # outgest (convert to output data structure for frontend)
   frontend_player_rank_list = [{'category': player, 'value': score} for player,score in player_rank_list]
@@ -33,10 +33,8 @@ def main(gender: str, stat: str, normalization: str, reverse: bool, limit: int, 
   return frontend_player_rank_list
 
 if __name__ == '__main__':
-  stat = 'dblFault'
-  pr = main(gender='m', stat=stat, normalization='percent', reverse=False, limit=3, verbose=True)
-  print(f'stat:{stat}. ranking:\n', pr, '\n')
-  pr = main(gender='w', stat=stat, normalization='percent', reverse=False, limit=3, verbose=True)
+  stat = 'ptWin'
+  pr = main(gender='m', stat=stat, normalization='count', reverse=False, limit=3, verbose=True)
   print(f'stat:{stat}. ranking:\n', pr, '\n')
   print('Finished crunching numbers.', end='')
 

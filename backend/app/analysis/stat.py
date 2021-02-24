@@ -1,8 +1,12 @@
 import pandas as pd
 
+# constant term added to denominator of all time-decay percentages to penalize players who haven't played in a long time
+PENALTY = 2.9
+
 NORMALIZATION_TO_COL_SYMBOL = {
   'count': '#',
   'percent': '%',
+  'time-decay': '%w',
 }
 
 
@@ -13,11 +17,11 @@ def player_to_stats_df(df):
   df_service_wins = df.groupby(['playerPtWinner'], as_index=False).agg({'isSvrWinner': 'sum'})
   df_service_wins.rename(columns={'playerPtWinner':'player', 'isSvrWinner':'svcPtWin#'}, inplace=True)
 
-  df_points_won = df.groupby(['playerPtWinner'], as_index=False).agg({'isPt': 'sum'})
-  df_points_won.rename(columns={'playerPtWinner':'player', 'isPt':'ptWin#'}, inplace=True)
+  df_points_won = df.groupby(['playerPtWinner'], as_index=False).agg({'isPt': 'sum', 'timeDecayedPt': 'sum'})
+  df_points_won.rename(columns={'playerPtWinner':'player', 'isPt':'ptWin#', 'timeDecayedPt': 'ptWin#w'}, inplace=True)
 
-  df_points_lost = df.groupby(['playerPtLoser'], as_index=False).agg({'isPt': 'sum'})
-  df_points_lost.rename(columns={'playerPtLoser':'player', 'isPt':'ptLoss#'}, inplace=True)
+  df_points_lost = df.groupby(['playerPtLoser'], as_index=False).agg({'isPt': 'sum', 'timeDecayedPt': 'sum'})
+  df_points_lost.rename(columns={'playerPtLoser':'player', 'isPt':'ptLoss#', 'timeDecayedPt': 'ptLoss#w'}, inplace=True)
 
   df_ace = df.groupby(['playerPtWinner'], as_index=False).agg({'isAce': 'sum'})
   df_ace.rename(columns={'playerPtWinner':'player', 'isAce':'ace#'}, inplace=True)
@@ -27,6 +31,10 @@ def player_to_stats_df(df):
 
   # create player stat dataframe
   df_player = pd.merge(df_points_won, df_points_lost, on='player')
+  # v weighted
+  df_player['pt#w'] = df_player['ptWin#w'] + df_player['ptLoss#w']
+  df_player['ptWin%w'] = df_player['ptWin#w'] / (df_player['pt#w'] + PENALTY)
+  # ^ weighted
   df_player['pt#'] = df_player['ptWin#'] + df_player['ptLoss#']
   df_player['ptWin%'] = df_player['ptWin#'] / df_player['pt#']
   df_player['svcPtWin#'] = df_service_wins['svcPtWin#']
@@ -38,14 +46,18 @@ def player_to_stats_df(df):
 
   # restrict it to players where we have a reasonable amount of data
   df_player_enough_data = df_player[df_player['pt#'] >= 400]
-
+  print('df_player_enough_data:', df_player_enough_data[['player', 'ptWin%', 'ptWin%w']])
   return df_player_enough_data
 
 
-def player_to_stat(df, stat, normalization, reverse, limit):
+def player_to_stat(df, stat, normalization, reverse, limit, verbose=False):
   ''' `df` is the player_to_stats dataframe. '''
+  if verbose:
+    print('normalization:', normalization)
   normalization_col_symbol = NORMALIZATION_TO_COL_SYMBOL[normalization]
   stat_col = f'{stat}{normalization_col_symbol}'
+  if verbose:
+    print('stat_col:', stat_col)
   df_player_to_stat = df[['player', stat_col]]
   # take the 'top 10' or so
   top_player_to_stat = df_player_to_stat.nsmallest(limit, stat_col) if reverse else df_player_to_stat.nlargest(limit, stat_col)
