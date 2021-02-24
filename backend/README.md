@@ -2,7 +2,7 @@
 
 ## Run dev server
 
-  docker-compose up
+  docker-compose up --build
 
 ## Test and prod server
 
