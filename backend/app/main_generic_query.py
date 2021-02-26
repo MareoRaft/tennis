@@ -33,8 +33,8 @@ def main(gender: str, stat: str, normalization: str, reverse: bool, limit: int, 
   return frontend_player_rank_list
 
 if __name__ == '__main__':
-  stat = 'ptWin'
-  pr = main(gender='m', stat=stat, normalization='count', reverse=False, limit=3, verbose=True)
-  print(f'stat:{stat}. ranking:\n', pr, '\n')
+  stat = 'dblFault'
+  pr = main(gender='m', stat=stat, normalization='percent', reverse=False, limit=3, verbose=True)
+  print(f'\n\nstat:{stat}. ranking:\n', pr, '\n')
   print('Finished crunching numbers.', end='')
 

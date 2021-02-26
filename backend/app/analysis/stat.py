@@ -11,16 +11,29 @@ NORMALIZATION_TO_COL_SYMBOL = {
 
 
 def get_stat_df(df, group_by_col, agg_col, new_stat_col):
+  # the aggregation column needs a corresponding 'weighted' agg col for the time-decay version of the stat
+  df[f'{agg_col}W'] = df[agg_col] * df['timeDecayedPt']
   # aggregate
   agg = {}
   agg[agg_col] = 'sum'
+  agg[f'{agg_col}W'] = 'sum'
   df_stat = df.groupby([group_by_col], as_index=False).agg(agg)
   # rename columns
   columns = {}
   columns[group_by_col] = 'player'
   columns[agg_col] = new_stat_col
+  columns[f'{agg_col}W'] = f'{new_stat_col}w'
   df_stat.rename(columns=columns, inplace=True)
   return df_stat
+
+
+def create_num_and_percent_col(df_player, df_stat, stat):
+  # regular version
+  df_player[f'{stat}#'] = df_stat[f'{stat}#']
+  df_player[f'{stat}%'] = df_player[f'{stat}#'] / df_player['pt#']
+  # weighted version (for time-decay)
+  df_player[f'{stat}#w'] = df_stat[f'{stat}#w']
+  df_player[f'{stat}%w'] = df_player[f'{stat}#w'] / (df_player['pt#w'] + PENALTY)
 
 
 def player_to_stats_df(df):
@@ -35,22 +48,19 @@ def player_to_stats_df(df):
 
   # create player stat dataframe
   df_player = pd.merge(df_points_won, df_points_lost, on='player')
-  # v weighted
-  # df_player['pt#w'] = df_player['ptWin#w'] + df_player['ptLoss#w']
-  # df_player['ptWin%w'] = df_player['ptWin#w'] / (df_player['pt#w'] + PENALTY)
-  # ^ weighted
   df_player['pt#'] = df_player['ptWin#'] + df_player['ptLoss#']
-  df_player['ptWin%'] = df_player['ptWin#'] / df_player['pt#']
-  df_player['svcPtWin#'] = df_service_wins['svcPtWin#']
-  df_player['svcPtWin%'] = df_player['svcPtWin#'] / df_player['pt#']
-  df_player['ace#'] = df_aces['ace#']
-  df_player['ace%'] = df_player['ace#'] / df_player['pt#']
-  df_player['dblFault#'] = df_double_faults['dblFault#']
-  df_player['dblFault%'] = df_player['dblFault#'] / df_player['pt#']
+  df_player['pt#w'] = df_player['ptWin#w'] + df_player['ptLoss#w']
+
+  # create # and % columns on the dataframe
+  create_num_and_percent_col(df_player, df_player, stat='ptWin')
+  create_num_and_percent_col(df_player, df_service_wins, stat='svcPtWin')
+  create_num_and_percent_col(df_player, df_aces, stat='ace')
+  create_num_and_percent_col(df_player, df_double_faults, stat='dblFault')
 
   # restrict it to players where we have a reasonable amount of data
   df_player_enough_data = df_player[df_player['pt#'] >= 400]
-  # print('df_player_enough_data:', df_player_enough_data[['player', 'ptWin%', 'ptWin%w']])
+
+  # return
   return df_player_enough_data
 
 
