@@ -40,7 +40,7 @@ The project contains a bar chart which is used for both the stats-comparisons an
 
 Users interact with the project via a website.  Users explore the data by choosing a (1) statistic, (2) normalization, (3) gender, and some other options.  Users can click on info buttons to get explanations of the various choices and methods used to compute the data.
 
-The user interactivity is client-side, and the client will make calls to the server to update the data as necessary.  Tools used to achieve this include [JavaScript](https://www.w3schools.com/js/default.asp), [React](https://create-react-app.dev/), [Material-UI](https://material-ui.com/), [amCharts](https://www.amcharts.com/), [Python](https://www.python.org/) 3, [Flask](https://palletsprojects.com/p/flask/), [Pandas](https://pandas.pydata.org/), and [Networkx](https://networkx.org/).
+The user interactivity is client-side, and the client will make calls to the server to update the data as necessary.  Tools used to achieve this include [JavaScript](https://www.w3schools.com/js/default.asp), [React](https://create-react-app.dev/), [Material-UI](https://material-ui.com/), [amCharts](https://www.amcharts.com/), [Python](https://www.python.org/) 3, [Flask](https://palletsprojects.com/p/flask/), [Pandas](https://pandas.pydata.org/), and [NetworkX](https://networkx.org/).
 
 
 
